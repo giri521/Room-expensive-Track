@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bachelor Room Expense Tracker</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
@@ -27,35 +27,29 @@
             background-color: #f5f5f5;
             color: var(--dark-color);
             line-height: 1.6;
-            padding: 10px;
-            font-size: 14px;
+            padding: 20px;
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 10px;
+            padding: 20px;
             background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
 
         h1, h2 {
             color: var(--primary-color);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: center;
-            font-size: 1.5rem;
-        }
-
-        h2 {
-            font-size: 1.3rem;
         }
 
         .btn {
             display: inline-block;
             background-color: var(--primary-color);
             color: white;
-            padding: 8px 12px;
+            padding: 8px 16px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -63,7 +57,6 @@
             font-size: 14px;
             transition: background-color 0.3s;
             margin: 2px;
-            white-space: nowrap;
         }
 
         .btn:hover {
@@ -71,7 +64,7 @@
         }
 
         .btn-sm {
-            padding: 5px 8px;
+            padding: 5px 10px;
             font-size: 12px;
         }
 
@@ -89,14 +82,13 @@
         }
 
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: 600;
-            font-size: 14px;
         }
 
         input, select, textarea {
@@ -109,39 +101,35 @@
 
         .grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
         .card {
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            padding: 12px;
-            margin-bottom: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 15px;
-            font-size: 13px;
-            overflow-x: auto;
-            display: block;
+            margin-bottom: 20px;
+            font-size: 14px;
         }
 
         th, td {
-            padding: 6px 8px;
+            padding: 8px 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
-            white-space: nowrap;
         }
 
         th {
             background-color: var(--primary-color);
             color: white;
-            font-size: 13px;
         }
 
         tr:nth-child(even) {
@@ -152,13 +140,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px;
-            margin-bottom: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
             background-color: white;
             border-radius: 5px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-left: 4px solid var(--primary-color);
-            font-size: 13px;
         }
 
         .balance-card.positive {
@@ -183,21 +170,19 @@
 
         .tabs {
             display: flex;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             border-bottom: 1px solid #ddd;
             flex-wrap: wrap;
-            gap: 5px;
         }
 
         .tab {
-            padding: 6px 12px;
+            padding: 8px 16px;
             cursor: pointer;
             background-color: #f1f1f1;
             border: none;
             border-radius: 5px 5px 0 0;
-            font-size: 13px;
-            flex-grow: 1;
-            text-align: center;
+            margin-right: 5px;
+            margin-bottom: 5px;
         }
 
         .tab.active {
@@ -221,7 +206,6 @@
             margin-bottom: 5px;
             background-color: #f8f9fa;
             border-radius: 4px;
-            font-size: 13px;
         }
 
         .member-actions {
@@ -231,81 +215,36 @@
 
         .edit-member-form {
             display: flex;
-            gap: 8px;
-            margin-top: 8px;
-            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         .edit-member-form input {
             flex-grow: 1;
-            min-width: 60%;
         }
 
         .quick-categories {
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .category-btn {
             background-color: #e9ecef;
             border: none;
-            padding: 5px 8px;
+            padding: 5px 10px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 12px;
         }
 
         .category-btn:hover {
             background-color: #dee2e6;
         }
 
-        /* Responsive table for mobile */
-        @media (max-width: 600px) {
-            table {
-                display: block;
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-            
-            .container {
-                padding: 8px;
-            }
-            
-            .card {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 1.3rem;
-            }
-            
-            h2 {
-                font-size: 1.1rem;
-            }
-            
-            .btn {
-                padding: 6px 10px;
-                font-size: 13px;
-            }
-            
-            .tabs {
-                margin-bottom: 10px;
-            }
-            
-            .tab {
-                padding: 5px 8px;
-                font-size: 12px;
-            }
-            
-            .edit-member-form {
-                flex-direction: column;
-                gap: 5px;
-            }
-            
-            .edit-member-form input {
-                min-width: 100%;
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -332,7 +271,7 @@
             }
             th, td {
                 border: 1px solid #ddd;
-                padding: 6px;
+                padding: 8px;
             }
             th {
                 background-color: #f2f2f2;
@@ -355,23 +294,21 @@
         <div id="transactions" class="tab-content active">
             <div class="card">
                 <h2>All Transactions</h2>
-                <div style="overflow-x: auto;">
-                    <table id="transactionsTable">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Type</th>
-                                <th>Person/Category</th>
-                                <th>Amount</th>
-                                <th>Description</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Transactions will be listed here -->
-                        </tbody>
-                    </table>
-                </div>
+                <table id="transactionsTable">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Person/Category</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Transactions will be listed here -->
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -588,7 +525,7 @@
                     category = otherCategory.value.trim() || 'Miscellaneous';
                 }
                 const amount = parseFloat(expenseAmount.value);
-                const description = expenseDesc.value.trim() || `${category} expense`;
+                const description = expenseDesc.value.trim() || ${category} expense;
                 
                 addTransaction('expense', category, amount, description);
                 expenseForm.reset();
@@ -686,20 +623,16 @@
                         <head>
                             <title>Room Expense Report</title>
                             <style>
-                                body { font-family: Arial, sans-serif; margin: 15px; font-size: 14px; }
-                                h1 { color: #4a6fa5; text-align: center; font-size: 1.3rem; }
-                                h2 { color: #4a6fa5; margin-top: 15px; font-size: 1.1rem; }
-                                table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 13px; }
-                                th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+                                body { font-family: Arial, sans-serif; margin: 20px; }
+                                h1 { color: #4a6fa5; text-align: center; }
+                                h2 { color: #4a6fa5; margin-top: 20px; }
+                                table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
                                 th { background-color: #f2f2f2; }
-                                .balance-item { margin-bottom: 8px; }
+                                .balance-item { margin-bottom: 10px; }
                                 .positive { color: #28a745; }
                                 .negative { color: #dc3545; }
-                                .summary { margin-top: 20px; font-weight: bold; }
-                                @media print {
-                                    body { font-size: 12px; }
-                                    table { font-size: 11px; }
-                                }
+                                .summary { margin-top: 30px; font-weight: bold; }
                             </style>
                         </head>
                         <body>
@@ -748,7 +681,7 @@
                 // Deposit person select
                 depositPerson.innerHTML = '<option value="">Select Member</option>';
                 members.forEach(person => {
-                    depositPerson.innerHTML += `<option value="${person}">${person}</option>`;
+                    depositPerson.innerHTML += <option value="${person}">${person}</option>;
                 });
             }
 
@@ -837,7 +770,7 @@
                             return;
                         }
                         
-                        if (confirm(`Delete ${member}?`)) {
+                        if (confirm(Delete ${member}?)) {
                             members.splice(index, 1);
                             saveMembers();
                             updateMemberSelects();
@@ -931,7 +864,7 @@
                 members.forEach(person => {
                     const balance = balances[person];
                     const div = document.createElement('div');
-                    div.className = `balance-card ${balance >= 0 ? 'positive' : 'negative'}`;
+                    div.className = balance-card ${balance >= 0 ? 'positive' : 'negative'};
                     div.innerHTML = `
                         <span>${person}</span>
                         <span class="balance-amount">₹${balance.toFixed(2)} contributed</span>
@@ -977,7 +910,7 @@
                 printContent.appendChild(title);
                 
                 const date = document.createElement('p');
-                date.textContent = `Generated on ${new Date().toLocaleDateString()}`;
+                date.textContent = Generated on ${new Date().toLocaleDateString()};
                 date.style.textAlign = 'center';
                 printContent.appendChild(date);
                 
@@ -1023,7 +956,7 @@
                     const balance = balances[person];
                     const balanceDiv = document.createElement('div');
                     balanceDiv.className = 'balance-item';
-                    balanceDiv.innerHTML = `<strong>${person}:</strong> ₹${balance.toFixed(2)} contributed`;
+                    balanceDiv.innerHTML = <strong>${person}:</strong> ₹${balance.toFixed(2)} contributed;
                     balancesList.appendChild(balanceDiv);
                 });
                 printContent.appendChild(balancesList);
