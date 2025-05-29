@@ -525,7 +525,7 @@
                     category = otherCategory.value.trim() || 'Miscellaneous';
                 }
                 const amount = parseFloat(expenseAmount.value);
-                const description = expenseDesc.value.trim() || ${category} expense;
+                const description = expenseDesc.value.trim() || `${category} expense`;
                 
                 addTransaction('expense', category, amount, description);
                 expenseForm.reset();
@@ -681,7 +681,7 @@
                 // Deposit person select
                 depositPerson.innerHTML = '<option value="">Select Member</option>';
                 members.forEach(person => {
-                    depositPerson.innerHTML += <option value="${person}">${person}</option>;
+                    depositPerson.innerHTML += `<option value="${person}">${person}</option>`;
                 });
             }
 
@@ -770,7 +770,7 @@
                             return;
                         }
                         
-                        if (confirm(Delete ${member}?)) {
+                        if (confirm(`Delete ${member}?`)) {
                             members.splice(index, 1);
                             saveMembers();
                             updateMemberSelects();
@@ -864,7 +864,7 @@
                 members.forEach(person => {
                     const balance = balances[person];
                     const div = document.createElement('div');
-                    div.className = balance-card ${balance >= 0 ? 'positive' : 'negative'};
+                    div.className = `balance-card ${balance >= 0 ? 'positive' : 'negative'}`;
                     div.innerHTML = `
                         <span>${person}</span>
                         <span class="balance-amount">₹${balance.toFixed(2)} contributed</span>
@@ -910,7 +910,7 @@
                 printContent.appendChild(title);
                 
                 const date = document.createElement('p');
-                date.textContent = Generated on ${new Date().toLocaleDateString()};
+                date.textContent = `Generated on ${new Date().toLocaleDateString()}`;
                 date.style.textAlign = 'center';
                 printContent.appendChild(date);
                 
@@ -956,7 +956,7 @@
                     const balance = balances[person];
                     const balanceDiv = document.createElement('div');
                     balanceDiv.className = 'balance-item';
-                    balanceDiv.innerHTML = <strong>${person}:</strong> ₹${balance.toFixed(2)} contributed;
+                    balanceDiv.innerHTML = `<strong>${person}:</strong> ₹${balance.toFixed(2)} contributed`;
                     balancesList.appendChild(balanceDiv);
                 });
                 printContent.appendChild(balancesList);
