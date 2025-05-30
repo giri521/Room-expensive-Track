@@ -3,139 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bachelor Room Expense Tracker</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <title>Room Expense Tracker</title>
     <style>
-        :root {
-            --primary-color: #00f0ff;
-            --secondary-color: #ff00f0;
-            --accent-color: #f0ff00;
-            --dark-bg: #0a0a12;
-            --darker-bg: #050508;
-            --card-bg: #121220;
-            --text-color: #e0e0ff;
-            --text-muted: #a0a0b0;
-            --success-color: #00ff88;
-            --danger-color: #ff0066;
-            --warning-color: #ffcc00;
-            --neon-glow: 0 0 10px rgba(0, 240, 255, 0.7);
-            --neon-glow-accent: 0 0 10px rgba(255, 0, 240, 0.7);
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: Arial, sans-serif;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
-
         body {
-            background-color: var(--dark-bg);
-            color: var(--text-color);
+            background-color: #f5f5f5;
+            color: #333;
             line-height: 1.6;
             padding: 10px;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 0, 240, 0.05) 0%, transparent 20%);
-            min-height: 100vh;
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 15px;
-            background-color: rgba(18, 18, 32, 0.8);
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(0, 240, 255, 0.1);
-            transform-style: preserve-3d;
-            perspective: 1000px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
 
         h1, h2 {
-            color: var(--primary-color);
+            color: #2c3e50;
             margin-bottom: 15px;
             text-align: center;
-            text-shadow: var(--neon-glow);
-            font-weight: 700;
-            letter-spacing: 1px;
         }
 
         h1 {
             font-size: 1.8rem;
             margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-            padding: 0 15px;
-        }
-
-        h1::before, h1::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 20px;
-            height: 2px;
-            background: var(--primary-color);
-            box-shadow: var(--neon-glow);
-        }
-
-        h1::before {
-            left: -20px;
-        }
-
-        h1::after {
-            right: -20px;
         }
 
         h2 {
             font-size: 1.4rem;
+            margin-top: 20px;
         }
 
         .btn {
             display: inline-block;
-            background-color: var(--primary-color);
-            color: var(--dark-bg);
+            background-color: #3498db;
+            color: white;
             padding: 8px 15px;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
             font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 4px;
-            box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
-            position: relative;
-            overflow: hidden;
-            transform: translateZ(0);
-            letter-spacing: 0.5px;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-        }
-
-        .btn:hover::before {
-            left: 100%;
+            margin: 5px;
         }
 
         .btn:hover {
-            transform: translateY(-2px) translateZ(10px);
-            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.5);
-        }
-
-        .btn:active {
-            transform: translateY(0) translateZ(5px);
+            background-color: #2980b9;
         }
 
         .btn-sm {
@@ -144,65 +67,51 @@
         }
 
         .btn-success {
-            background-color: var(--success-color);
-            box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+            background-color: #27ae60;
         }
 
         .btn-success:hover {
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.5);
+            background-color: #219955;
         }
 
         .btn-danger {
-            background-color: var(--danger-color);
-            box-shadow: 0 0 8px rgba(255, 0, 102, 0.3);
+            background-color: #e74c3c;
         }
 
         .btn-danger:hover {
-            box-shadow: 0 5px 15px rgba(255, 0, 102, 0.5);
+            background-color: #c0392b;
         }
 
         .btn-warning {
-            background-color: var(--warning-color);
-            color: var(--dark-bg);
-            box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+            background-color: #f39c12;
+            color: white;
         }
 
         .btn-warning:hover {
-            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.5);
+            background-color: #d35400;
         }
 
         .form-group {
             margin-bottom: 15px;
-            position: relative;
         }
 
         label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            color: var(--primary-color);
-            text-shadow: var(--neon-glow);
-            letter-spacing: 0.5px;
-            font-size: 14px;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 10px 12px;
-            background-color: rgba(10, 10, 20, 0.5);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            border-radius: 6px;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             font-size: 14px;
-            color: var(--text-color);
-            transition: all 0.3s ease;
-            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 12px rgba(0, 240, 255, 0.5), inset 0 0 8px rgba(0, 0, 0, 0.3);
-            transform: translateZ(10px);
+            border-color: #3498db;
         }
 
         .grid {
@@ -213,161 +122,86 @@
         }
 
         .card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            background-color: white;
+            border-radius: 5px;
             padding: 15px;
             margin-bottom: 15px;
-            border: 1px solid rgba(0, 240, 255, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-        }
-
-        .card:hover {
-            transform: translateY(-3px) translateZ(5px);
-            box-shadow: 0 8px 20px rgba(0, 240, 255, 0.2);
+            border: 1px solid #ddd;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 15px;
-            font-size: 13px;
-            transform: translateZ(0);
+            font-size: 14px;
         }
 
         th, td {
             padding: 8px 10px;
             text-align: left;
-            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+            border-bottom: 1px solid #ddd;
         }
 
         th {
-            background-color: rgba(0, 240, 255, 0.1);
-            color: var(--primary-color);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            font-size: 12px;
-        }
-
-        tr {
-            transition: all 0.2s ease;
-        }
-
-        tr:hover {
-            background-color: rgba(0, 240, 255, 0.05);
-            transform: translateX(3px) translateZ(3px);
-        }
-
-        tr:nth-child(even) {
-            background-color: rgba(18, 18, 32, 0.5);
+            background-color: #f2f2f2;
+            font-weight: bold;
         }
 
         .balance-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px;
+            padding: 10px;
             margin-bottom: 10px;
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            border-left: 4px solid var(--primary-color);
-            transition: transform 0.3s ease;
-            transform-style: preserve-3d;
-        }
-
-        .balance-card:hover {
-            transform: translateY(-2px) translateZ(3px);
+            background-color: white;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
         }
 
         .balance-card.positive {
-            border-left-color: var(--success-color);
+            border-left-color: #27ae60;
         }
 
         .balance-card.negative {
-            border-left-color: var(--danger-color);
+            border-left-color: #e74c3c;
         }
 
         .balance-amount {
             font-weight: bold;
-            font-size: 14px;
         }
 
         .positive .balance-amount {
-            color: var(--success-color);
-            text-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
+            color: #27ae60;
         }
 
         .negative .balance-amount {
-            color: var(--danger-color);
-            text-shadow: 0 0 6px rgba(255, 0, 102, 0.5);
+            color: #e74c3c;
         }
 
         .tabs {
             display: flex;
             margin-bottom: 15px;
-            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+            border-bottom: 1px solid #ddd;
             flex-wrap: wrap;
-            gap: 4px;
-            overflow-x: auto;
-            padding-bottom: 5px;
         }
 
         .tab {
-            padding: 8px 12px;
+            padding: 8px 15px;
             cursor: pointer;
-            background-color: rgba(0, 240, 255, 0.1);
+            background-color: #f2f2f2;
             border: none;
-            border-radius: 6px 6px 0 0;
-            color: var(--text-muted);
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            transform-style: preserve-3d;
-            font-size: 13px;
-            white-space: nowrap;
-        }
-
-        .tab::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--primary-color);
-            transform: scaleX(0);
-            transform-origin: right;
-            transition: transform 0.3s ease;
-        }
-
-        .tab:hover {
-            color: var(--primary-color);
-            background-color: rgba(0, 240, 255, 0.2);
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+            font-weight: bold;
         }
 
         .tab.active {
-            background-color: rgba(0, 240, 255, 0.3);
-            color: var(--primary-color);
-            text-shadow: var(--neon-glow);
-        }
-
-        .tab.active::after {
-            transform: scaleX(1);
-            transform-origin: left;
+            background-color: #3498db;
+            color: white;
         }
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .tab-content.active {
@@ -378,253 +212,54 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 12px;
-            margin-bottom: 6px;
-            background-color: rgba(0, 240, 255, 0.05);
-            border-radius: 6px;
-            border-left: 3px solid var(--primary-color);
-            transition: all 0.3s ease;
-        }
-
-        .member-item:hover {
-            background-color: rgba(0, 240, 255, 0.1);
-            transform: translateX(3px) translateZ(3px);
+            padding: 10px;
+            margin-bottom: 8px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            border-left: 3px solid #3498db;
         }
 
         .member-actions {
             display: flex;
-            gap: 6px;
+            gap: 5px;
         }
 
         .edit-member-form {
             display: flex;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .edit-member-form input {
-            flex-grow: 1;
+            gap: 5px;
+            margin-top: 5px;
         }
 
         .quick-categories {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 12px;
+            gap: 5px;
+            margin-bottom: 10px;
         }
 
         .category-btn {
-            background-color: rgba(0, 240, 255, 0.1);
-            border: 1px solid rgba(0, 240, 255, 0.3);
-            padding: 6px 12px;
+            background-color: #f2f2f2;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
             border-radius: 20px;
             cursor: pointer;
-            color: var(--text-color);
             font-size: 12px;
-            transition: all 0.3s ease;
         }
 
         .category-btn:hover {
-            background-color: rgba(0, 240, 255, 0.3);
-            transform: translateY(-2px) translateZ(3px);
-            box-shadow: var(--neon-glow);
+            background-color: #e0e0e0;
         }
 
-        .floating-bg {
-            position: fixed;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
-            z-index: -1;
-            animation: float 15s infinite ease-in-out;
-        }
-
-        .floating-bg:nth-child(1) {
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-bg:nth-child(2) {
-            top: 60%;
-            left: 70%;
-            animation-delay: 3s;
-            background: radial-gradient(circle, rgba(255, 0, 240, 0.1) 0%, transparent 70%);
-        }
-
-        .floating-bg:nth-child(3) {
-            top: 30%;
-            left: 50%;
-            animation-delay: 6s;
-            background: radial-gradient(circle, rgba(240, 255, 0, 0.1) 0%, transparent 70%);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(15px, 15px) rotate(5deg); }
-            50% { transform: translate(0, 20px) rotate(0deg); }
-            75% { transform: translate(-15px, 15px) rotate(-5deg); }
-        }
-
-        .neon-border {
-            position: relative;
-        }
-
-        .neon-border::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            left: -1px;
-            right: -1px;
-            bottom: -1px;
-            border-radius: inherit;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .neon-border:hover::before {
-            opacity: 0.7;
-            animation: neonGlow 1.5s infinite alternate;
-        }
-
-        @keyframes neonGlow {
-            from { filter: blur(3px); opacity: 0.5; }
-            to { filter: blur(5px); opacity: 0.8; }
-        }
-
-        /* Print-specific styles */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .print-content, .print-content * {
-                visibility: visible;
-            }
-            .print-content {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-            .no-print {
-                display: none !important;
-            }
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                font-size: 12px;
-            }
-            th, td {
-                border: 1px solid #ddd;
-                padding: 6px;
-            }
-            th {
-                background-color: #f2f2f2;
-                color: #000;
-            }
-        }
-
-        /* Larger screens */
         @media (min-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-                padding: 0 20px;
-            }
-            
-            h1::before, h1::after {
-                width: 30px;
-            }
-            
-            h1::before {
-                left: -30px;
-            }
-            
-            h1::after {
-                right: -30px;
-            }
-            
-            h2 {
-                font-size: 1.6rem;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                margin: 5px;
-            }
-            
             .grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
-            
-            .card {
-                padding: 20px;
-            }
-            
-            table {
-                font-size: 14px;
-            }
-            
-            th, td {
-                padding: 10px 15px;
-            }
-        }
-
-        /* Very small screens */
-        @media (max-width: 400px) {
-            .container {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-                padding: 0 10px;
-            }
-            
-            h1::before, h1::after {
-                width: 15px;
-            }
-            
-            h1::before {
-                left: -15px;
-            }
-            
-            h1::after {
-                right: -15px;
-            }
-            
-            .tab {
-                padding: 6px 8px;
-                font-size: 12px;
-            }
-            
-            .member-actions {
-                flex-direction: column;
-                gap: 4px;
-            }
-            
-            .edit-member-form {
-                flex-direction: column;
-                gap: 6px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Floating background elements -->
-    <div class="floating-bg"></div>
-    <div class="floating-bg"></div>
-    <div class="floating-bg"></div>
-    
     <div class="container">
-        <h1>BACHELOR ROOM EXPENSE TRACKER</h1>
+        <h1>ROOM EXPENSE TRACKER</h1>
         
         <div class="tabs">
             <button class="tab active" data-tab="transactions">Transactions</button>
@@ -635,7 +270,7 @@
         </div>
 
         <div id="transactions" class="tab-content active">
-            <div class="card neon-border">
+            <div class="card">
                 <h2>ALL TRANSACTIONS</h2>
                 <div style="overflow-x: auto;">
                     <table id="transactionsTable">
@@ -658,7 +293,7 @@
         </div>
 
         <div id="balances" class="tab-content">
-            <div class="card neon-border">
+            <div class="card">
                 <h2>CURRENT BALANCES</h2>
                 <div id="balancesList">
                     <!-- Balances will be listed here -->
@@ -667,7 +302,7 @@
         </div>
 
         <div id="add-money" class="tab-content">
-            <div class="card neon-border">
+            <div class="card">
                 <h2>ADD MONEY TO POOL</h2>
                 <form id="depositForm">
                     <div class="form-group">
@@ -693,8 +328,672 @@
         </div>
 
         <div id="spend-money" class="tab-content">
-            <div class="card neon-border">
+            <div class="card">
                 <h2>SPEND MONEY FROM POOL</h2>
                 <form id="expenseForm">
                     <div class="form-group">
-                        <label fo
+                        <label for="expenseCategory">Category</label>
+                        <div class="quick-categories">
+                            <button type="button" class="category-btn" data-category="Groceries">Groceries</button>
+                            <button type="button" class="category-btn" data-category="Vegetables">Vegetables</button>
+                            <button type="button" class="category-btn" data-category="Water">Water</button>
+                            <button type="button" class="category-btn" data-category="Electricity">Electricity</button>
+                            <button type="button" class="category-btn" data-category="Rent">Rent</button>
+                        </div>
+                        <select id="expenseCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Groceries">Groceries</option>
+                            <option value="Vegetables">Vegetables</option>
+                            <option value="Water">Water</option>
+                            <option value="Electricity">Electricity</option>
+                            <option value="Rent">Rent</option>
+                            <option value="Other">Other (Specify)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="otherCategoryGroup" style="display: none;">
+                        <label for="otherCategory">Specify Category</label>
+                        <input type="text" id="otherCategory">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expenseAmount">Amount (₹)</label>
+                        <input type="number" id="expenseAmount" min="1" step="1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expenseDesc">Description (Optional)</label>
+                        <input type="text" id="expenseDesc">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-danger">Record Expense</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="members" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>ADD MEMBER</h2>
+                    <form id="memberForm">
+                        <div class="form-group">
+                            <label for="memberName">Member Name</label>
+                            <input type="text" id="memberName" required>
+                        </div>
+                        <button type="submit" class="btn">Add Member</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h2>CURRENT MEMBERS</h2>
+                    <div id="membersList">
+                        <!-- Members will be listed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2>QUICK ACTIONS</h2>
+            <div class="grid">
+                <div>
+                    <button id="exportBtn" class="btn btn-success">Export Data</button>
+                    <button id="importBtn" class="btn">Import Data</button>
+                </div>
+                <div>
+                    <button id="printBtn" class="btn">Print Report</button>
+                    <button id="resetBtn" class="btn btn-danger">Reset All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden div for printing -->
+    <div id="printContent" style="display: none;"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM elements
+            const depositForm = document.getElementById('depositForm');
+            const depositPerson = document.getElementById('depositPerson');
+            const depositAmount = document.getElementById('depositAmount');
+            const depositDesc = document.getElementById('depositDesc');
+            
+            const expenseForm = document.getElementById('expenseForm');
+            const expenseCategory = document.getElementById('expenseCategory');
+            const otherCategoryGroup = document.getElementById('otherCategoryGroup');
+            const otherCategory = document.getElementById('otherCategory');
+            const expenseAmount = document.getElementById('expenseAmount');
+            const expenseDesc = document.getElementById('expenseDesc');
+            
+            const memberForm = document.getElementById('memberForm');
+            const memberNameInput = document.getElementById('memberName');
+            
+            const transactionsTable = document.getElementById('transactionsTable').querySelector('tbody');
+            const balancesList = document.getElementById('balancesList');
+            const membersList = document.getElementById('membersList');
+            
+            const exportBtn = document.getElementById('exportBtn');
+            const importBtn = document.getElementById('importBtn');
+            const printBtn = document.getElementById('printBtn');
+            const resetBtn = document.getElementById('resetBtn');
+            
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const categoryBtns = document.querySelectorAll('.category-btn');
+
+            // Data structure
+            let members = JSON.parse(localStorage.getItem('roomMoneyMembers')) || ['Roommate 1', 'Roommate 2', 'Roommate 3'];
+            let transactions = JSON.parse(localStorage.getItem('roomMoneyTransactions')) || [];
+
+            // Initialize the app
+            initApp();
+
+            // Tab functionality
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+
+            // Quick category buttons
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    expenseCategory.value = this.dataset.category;
+                    if (expenseCategory.value === 'Other') {
+                        otherCategoryGroup.style.display = 'block';
+                    } else {
+                        otherCategoryGroup.style.display = 'none';
+                    }
+                });
+            });
+
+            // Expense category change
+            expenseCategory.addEventListener('change', function() {
+                if (this.value === 'Other') {
+                    otherCategoryGroup.style.display = 'block';
+                } else {
+                    otherCategoryGroup.style.display = 'none';
+                }
+            });
+
+            // Deposit form submission
+            depositForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const person = depositPerson.value;
+                const amount = parseFloat(depositAmount.value);
+                const description = depositDesc.value.trim() || 'Money added to pool';
+                
+                addTransaction('deposit', person, amount, description);
+                depositForm.reset();
+            });
+
+            // Expense form submission
+            expenseForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                let category = expenseCategory.value;
+                if (category === 'Other') {
+                    category = otherCategory.value.trim() || 'Miscellaneous';
+                }
+                const amount = parseFloat(expenseAmount.value);
+                const description = expenseDesc.value.trim() || `${category} expense`;
+                
+                addTransaction('expense', category, amount, description);
+                expenseForm.reset();
+                otherCategoryGroup.style.display = 'none';
+            });
+
+            // Member form submission
+            memberForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = memberNameInput.value.trim();
+                
+                if (name && !members.includes(name)) {
+                    members.push(name);
+                    saveMembers();
+                    updateMemberSelects();
+                    renderMembersList();
+                    memberNameInput.value = '';
+                }
+            });
+
+            // Export data
+            exportBtn.addEventListener('click', function() {
+                const data = {
+                    members: members,
+                    transactions: transactions
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'room-expense-data.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+
+            // Import data
+            importBtn.addEventListener('click', function() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json';
+                
+                input.onchange = e => {
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    
+                    reader.onload = event => {
+                        try {
+                            const data = JSON.parse(event.target.result);
+                            
+                            if (data.members && data.transactions) {
+                                members = data.members;
+                                transactions = data.transactions;
+                                
+                                saveMembers();
+                                saveTransactions();
+                                initApp();
+                                
+                                alert('Data imported successfully!');
+                            } else {
+                                alert('Invalid data format.');
+                            }
+                        } catch (error) {
+                            alert('Error parsing the file.');
+                        }
+                    };
+                    
+                    reader.readAsText(file);
+                };
+                
+                input.click();
+            });
+
+            // Reset all data
+            resetBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to reset all data? This cannot be undone.')) {
+                    members = ['Roommate 1', 'Roommate 2', 'Roommate 3'];
+                    transactions = [];
+                    
+                    saveMembers();
+                    saveTransactions();
+                    initApp();
+                }
+            });
+
+            // Print report
+            printBtn.addEventListener('click', function() {
+                preparePrintContent();
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Room Expense Report</title>
+                            <style>
+                                body { font-family: Arial, sans-serif; margin: 15px; }
+                                h1 { color: #2c3e50; text-align: center; margin-bottom: 20px; }
+                                h2 { color: #2c3e50; margin-top: 20px; font-size: 18px; }
+                                table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 14px; }
+                                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                                th { background-color: #f2f2f2; }
+                                .balance-item { margin-bottom: 10px; padding: 8px; border-left: 4px solid #ddd; }
+                                .positive { color: #27ae60; border-left-color: #27ae60; }
+                                .negative { color: #e74c3c; border-left-color: #e74c3c; }
+                                .summary { margin-top: 20px; font-weight: bold; padding: 10px; background-color: #f8f9fa; border-radius: 5px; }
+                                @page { size: auto; margin: 10mm; }
+                                @media print {
+                                    body { margin: 0; padding: 0; }
+                                    .no-print { display: none !important; }
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            ${document.getElementById('printContent').innerHTML}
+                            <script>
+                                window.onload = function() {
+                                    setTimeout(function() {
+                                        window.print();
+                                        setTimeout(function() {
+                                            window.close();
+                                        }, 500);
+                                    }, 200);
+                                };
+                            <\/script>
+                        </body>
+                    </html>
+                `);
+                printWindow.document.close();
+            });
+
+            // Initialize the app
+            function initApp() {
+                updateMemberSelects();
+                renderTransactions();
+                renderBalances();
+                renderMembersList();
+            }
+
+            // Add transaction helper
+            function addTransaction(type, personOrCategory, amount, description) {
+                const transaction = {
+                    id: Date.now(),
+                    date: new Date().toISOString(),
+                    type,
+                    personOrCategory,
+                    amount,
+                    description
+                };
+                
+                transactions.push(transaction);
+                saveTransactions();
+                renderTransactions();
+                renderBalances();
+            }
+
+            // Update member selects
+            function updateMemberSelects() {
+                // Deposit person select
+                depositPerson.innerHTML = '<option value="">Select Member</option>';
+                members.forEach(person => {
+                    depositPerson.innerHTML += `<option value="${person}">${person}</option>`;
+                });
+            }
+
+            // Render members list
+            function renderMembersList() {
+                membersList.innerHTML = '';
+                
+                if (members.length === 0) {
+                    membersList.innerHTML = '<p>No members added yet.</p>';
+                    return;
+                }
+                
+                members.forEach((member, index) => {
+                    const memberDiv = document.createElement('div');
+                    memberDiv.className = 'member-item';
+                    memberDiv.innerHTML = `
+                        <span>${member}</span>
+                        <div class="member-actions">
+                            <button class="btn btn-sm btn-warning edit-member" data-index="${index}">Edit</button>
+                            <button class="btn btn-sm btn-danger delete-member" data-index="${index}">Delete</button>
+                        </div>
+                    `;
+                    membersList.appendChild(memberDiv);
+                });
+                
+                // Add event listeners to edit buttons
+                document.querySelectorAll('.edit-member').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        const member = members[index];
+                        const memberItem = this.closest('.member-item');
+                        
+                        memberItem.innerHTML = `
+                            <form class="edit-member-form" data-index="${index}">
+                                <input type="text" value="${member}" required>
+                                <button type="submit" class="btn btn-sm btn-success">Save</button>
+                                <button type="button" class="btn btn-sm btn-danger cancel-edit">Cancel</button>
+                            </form>
+                        `;
+                        
+                        // Handle edit form submission
+                        const editForm = memberItem.querySelector('.edit-member-form');
+                        editForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            const newName = this.querySelector('input').value.trim();
+                            
+                            if (newName && !members.includes(newName)) {
+                                members[index] = newName;
+                                saveMembers();
+                                updateMemberSelects();
+                                renderMembersList();
+                                
+                                // Update transactions with new name if needed
+                                transactions = transactions.map(trans => {
+                                    if (trans.type === 'deposit' && trans.personOrCategory === member) {
+                                        return {...trans, personOrCategory: newName};
+                                    }
+                                    return trans;
+                                });
+                                saveTransactions();
+                                renderTransactions();
+                                renderBalances();
+                            }
+                        });
+                        
+                        // Handle cancel
+                        memberItem.querySelector('.cancel-edit').addEventListener('click', function() {
+                            renderMembersList();
+                        });
+                    });
+                });
+                
+                // Add event listeners to delete buttons
+                document.querySelectorAll('.delete-member').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        const member = members[index];
+                        
+                        // Check if member is involved in any transactions
+                        const isInvolved = transactions.some(trans => 
+                            trans.type === 'deposit' && trans.personOrCategory === member
+                        );
+                        
+                        if (isInvolved) {
+                            alert('Cannot delete this member as they have transactions. Delete the transactions first.');
+                            return;
+                        }
+                        
+                        if (confirm(`Delete ${member}?`)) {
+                            members.splice(index, 1);
+                            saveMembers();
+                            updateMemberSelects();
+                            renderMembersList();
+                        }
+                    });
+                });
+            }
+
+            // Render transactions
+            function renderTransactions() {
+                transactionsTable.innerHTML = '';
+                
+                if (transactions.length === 0) {
+                    transactionsTable.innerHTML = '<tr><td colspan="6" style="text-align: center;">No transactions yet.</td></tr>';
+                    return;
+                }
+                
+                transactions.slice().reverse().forEach(trans => {
+                    const row = document.createElement('tr');
+                    
+                    let typeText = '';
+                    let amountClass = '';
+                    
+                    if (trans.type === 'deposit') {
+                        typeText = 'Deposit';
+                        amountClass = 'positive';
+                    } else {
+                        typeText = 'Expense';
+                        amountClass = 'negative';
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${new Date(trans.date).toLocaleDateString()}</td>
+                        <td>${typeText}</td>
+                        <td>${trans.personOrCategory}</td>
+                        <td class="${amountClass}">₹${trans.amount.toFixed(2)}</td>
+                        <td>${trans.description}</td>
+                        <td><button class="btn btn-sm btn-danger delete-transaction" data-id="${trans.id}">Delete</button></td>
+                    `;
+                    transactionsTable.appendChild(row);
+                });
+                
+                // Add event listeners to delete buttons
+                document.querySelectorAll('.delete-transaction').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const id = parseInt(this.dataset.id);
+                        
+                        if (confirm('Delete this transaction?')) {
+                            transactions = transactions.filter(t => t.id !== id);
+                            saveTransactions();
+                            renderTransactions();
+                            renderBalances();
+                        }
+                    });
+                });
+            }
+
+            // Render balances
+            function renderBalances() {
+                balancesList.innerHTML = '';
+                
+                if (members.length === 0) {
+                    balancesList.innerHTML = '<p>No members added yet.</p>';
+                    return;
+                }
+                
+                // Calculate total deposits and expenses
+                const totalDeposits = transactions
+                    .filter(t => t.type === 'deposit')
+                    .reduce((sum, t) => sum + t.amount, 0);
+                
+                const totalExpenses = transactions
+                    .filter(t => t.type === 'expense')
+                    .reduce((sum, t) => sum + t.amount, 0);
+                
+                // Calculate each member's deposits
+                const memberDeposits = {};
+                members.forEach(member => {
+                    memberDeposits[member] = transactions
+                        .filter(t => t.type === 'deposit' && t.personOrCategory === member)
+                        .reduce((sum, t) => sum + t.amount, 0);
+                });
+                
+                // Calculate each member's share of expenses
+                const memberCount = members.length;
+                const expensePerMember = totalExpenses / memberCount;
+                
+                // Calculate each member's balance
+                members.forEach(member => {
+                    const balance = memberDeposits[member] - expensePerMember;
+                    const balanceCard = document.createElement('div');
+                    balanceCard.className = `balance-card ${balance >= 0 ? 'positive' : 'negative'}`;
+                    
+                    balanceCard.innerHTML = `
+                        <span>${member}</span>
+                        <span class="balance-amount">₹${Math.abs(balance).toFixed(2)} ${balance >= 0 ? 'owed' : 'owes'}</span>
+                    `;
+                    
+                    balancesList.appendChild(balanceCard);
+                });
+                
+                // Add summary card
+                const summaryCard = document.createElement('div');
+                summaryCard.className = 'balance-card';
+                summaryCard.innerHTML = `
+                    <span>Total Pool Money</span>
+                    <span class="balance-amount">₹${(totalDeposits - totalExpenses).toFixed(2)}</span>
+                `;
+                balancesList.appendChild(summaryCard);
+            }
+
+            // Prepare print content
+            function preparePrintContent() {
+                const printContent = document.getElementById('printContent');
+                printContent.innerHTML = '';
+                
+                // Add title
+                const title = document.createElement('h1');
+                title.textContent = 'Room Expense Report';
+                printContent.appendChild(title);
+                
+                // Add date
+                const date = document.createElement('p');
+                date.textContent = `Generated on: ${new Date().toLocaleDateString()}`;
+                date.style.textAlign = 'center';
+                date.style.marginBottom = '20px';
+                printContent.appendChild(date);
+                
+                // Add members section
+                const membersTitle = document.createElement('h2');
+                membersTitle.textContent = 'Current Members';
+                printContent.appendChild(membersTitle);
+                
+                const membersList = document.createElement('ul');
+                members.forEach(member => {
+                    const li = document.createElement('li');
+                    li.textContent = member;
+                    li.style.marginBottom = '5px';
+                    membersList.appendChild(li);
+                });
+                printContent.appendChild(membersList);
+                
+                // Add transactions section
+                const transTitle = document.createElement('h2');
+                transTitle.textContent = 'Recent Transactions';
+                printContent.appendChild(transTitle);
+                
+                if (transactions.length > 0) {
+                    const transTable = document.createElement('table');
+                    transTable.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Person/Category</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${transactions.slice().reverse().slice(0, 20).map(trans => `
+                                <tr>
+                                    <td>${new Date(trans.date).toLocaleDateString()}</td>
+                                    <td>${trans.type === 'deposit' ? 'Deposit' : 'Expense'}</td>
+                                    <td>${trans.personOrCategory}</td>
+                                    <td class="${trans.type === 'deposit' ? 'positive' : 'negative'}">₹${trans.amount.toFixed(2)}</td>
+                                    <td>${trans.description}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    `;
+                    printContent.appendChild(transTable);
+                } else {
+                    const noTrans = document.createElement('p');
+                    noTrans.textContent = 'No transactions recorded yet.';
+                    printContent.appendChild(noTrans);
+                }
+                
+                // Add balances section
+                const balancesTitle = document.createElement('h2');
+                balancesTitle.textContent = 'Current Balances';
+                printContent.appendChild(balancesTitle);
+                
+                if (members.length > 0) {
+                    // Calculate balances (same logic as renderBalances)
+                    const totalExpenses = transactions
+                        .filter(t => t.type === 'expense')
+                        .reduce((sum, t) => sum + t.amount, 0);
+                    
+                    const memberDeposits = {};
+                    members.forEach(member => {
+                        memberDeposits[member] = transactions
+                            .filter(t => t.type === 'deposit' && t.personOrCategory === member)
+                            .reduce((sum, t) => sum + t.amount, 0);
+                    });
+                    
+                    const expensePerMember = totalExpenses / members.length;
+                    
+                    members.forEach(member => {
+                        const balance = memberDeposits[member] - expensePerMember;
+                        const balanceDiv = document.createElement('div');
+                        balanceDiv.className = `balance-item ${balance >= 0 ? 'positive' : 'negative'}`;
+                        balanceDiv.innerHTML = `
+                            <strong>${member}</strong>: ₹${Math.abs(balance).toFixed(2)} ${balance >= 0 ? 'should receive' : 'should pay'}
+                        `;
+                        printContent.appendChild(balanceDiv);
+                    });
+                    
+                    // Add summary
+                    const totalDeposits = transactions
+                        .filter(t => t.type === 'deposit')
+                        .reduce((sum, t) => sum + t.amount, 0);
+                    
+                    const summaryDiv = document.createElement('div');
+                    summaryDiv.className = 'summary';
+                    summaryDiv.innerHTML = `
+                        <p>Total Deposits: ₹${totalDeposits.toFixed(2)}</p>
+                        <p>Total Expenses: ₹${totalExpenses.toFixed(2)}</p>
+                        <p>Remaining Pool Money: ₹${(totalDeposits - totalExpenses).toFixed(2)}</p>
+                    `;
+                    printContent.appendChild(summaryDiv);
+                } else {
+                    const noMembers = document.createElement('p');
+                    noMembers.textContent = 'No members added yet.';
+                    printContent.appendChild(noMembers);
+                }
+            }
+
+            // Save members to localStorage
+            function saveMembers() {
+                localStorage.setItem('roomMoneyMembers', JSON.stringify(members));
+            }
+
+            // Save transactions to localStorage
+            function saveTransactions() {
+                localStorage.setItem('roomMoneyTransactions', JSON.stringify(transactions));
+            }
+        });
+    </script>
+</body>
+</html>
