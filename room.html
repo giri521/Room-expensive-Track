@@ -7,60 +7,135 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
-            --primary-color: #4a6fa5;
-            --secondary-color: #166088;
-            --light-color: #f8f9fa;
-            --dark-color: #343a40;
-            --success-color: #28a745;
-            --danger-color: #dc3545;
-            --warning-color: #ffc107;
+            --primary-color: #00f0ff;
+            --secondary-color: #ff00f0;
+            --accent-color: #f0ff00;
+            --dark-bg: #0a0a12;
+            --darker-bg: #050508;
+            --card-bg: #121220;
+            --text-color: #e0e0ff;
+            --text-muted: #a0a0b0;
+            --success-color: #00ff88;
+            --danger-color: #ff0066;
+            --warning-color: #ffcc00;
+            --neon-glow: 0 0 10px rgba(0, 240, 255, 0.7);
+            --neon-glow-accent: 0 0 10px rgba(255, 0, 240, 0.7);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&display=swap');
+
         body {
-            background-color: #f5f5f5;
-            color: var(--dark-color);
+            background-color: var(--dark-bg);
+            color: var(--text-color);
             line-height: 1.6;
-            padding: 20px;
+            padding: 10px;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 240, 0.05) 0%, transparent 20%);
+            min-height: 100vh;
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            background-color: rgba(18, 18, 32, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
         h1, h2 {
             color: var(--primary-color);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
+            text-shadow: var(--neon-glow);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            padding: 0 15px;
+        }
+
+        h1::before, h1::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 2px;
+            background: var(--primary-color);
+            box-shadow: var(--neon-glow);
+        }
+
+        h1::before {
+            left: -20px;
+        }
+
+        h1::after {
+            right: -20px;
+        }
+
+        h2 {
+            font-size: 1.4rem;
         }
 
         .btn {
             display: inline-block;
             background-color: var(--primary-color);
-            color: white;
-            padding: 8px 16px;
+            color: var(--dark-bg);
+            padding: 8px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
             font-size: 14px;
-            transition: background-color 0.3s;
-            margin: 2px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 4px;
+            box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            transform: translateZ(0);
+            letter-spacing: 0.5px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:hover {
-            background-color: var(--secondary-color);
+            transform: translateY(-2px) translateZ(10px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.5);
+        }
+
+        .btn:active {
+            transform: translateY(0) translateZ(5px);
         }
 
         .btn-sm {
@@ -70,82 +145,141 @@
 
         .btn-success {
             background-color: var(--success-color);
+            box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.5);
         }
 
         .btn-danger {
             background-color: var(--danger-color);
+            box-shadow: 0 0 8px rgba(255, 0, 102, 0.3);
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 5px 15px rgba(255, 0, 102, 0.5);
         }
 
         .btn-warning {
             background-color: var(--warning-color);
-            color: var(--dark-color);
+            color: var(--dark-bg);
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+        }
+
+        .btn-warning:hover {
+            box-shadow: 0 5px 15px rgba(255, 204, 0, 0.5);
         }
 
         .form-group {
             margin-bottom: 15px;
+            position: relative;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             font-weight: 600;
+            color: var(--primary-color);
+            text-shadow: var(--neon-glow);
+            letter-spacing: 0.5px;
+            font-size: 14px;
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 10px 12px;
+            background-color: rgba(10, 10, 20, 0.5);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 6px;
             font-size: 14px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.2);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 12px rgba(0, 240, 255, 0.5), inset 0 0 8px rgba(0, 0, 0, 0.3);
+            transform: translateZ(10px);
         }
 
         .grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .card {
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 240, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .card:hover {
+            transform: translateY(-3px) translateZ(5px);
+            box-shadow: 0 8px 20px rgba(0, 240, 255, 0.2);
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
-            font-size: 14px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            transform: translateZ(0);
         }
 
         th, td {
             padding: 8px 10px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.1);
         }
 
         th {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: rgba(0, 240, 255, 0.1);
+            color: var(--primary-color);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        tr {
+            transition: all 0.2s ease;
+        }
+
+        tr:hover {
+            background-color: rgba(0, 240, 255, 0.05);
+            transform: translateX(3px) translateZ(3px);
         }
 
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: rgba(18, 18, 32, 0.5);
         }
 
         .balance-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
             margin-bottom: 10px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
             border-left: 4px solid var(--primary-color);
+            transition: transform 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .balance-card:hover {
+            transform: translateY(-2px) translateZ(3px);
         }
 
         .balance-card.positive {
@@ -158,40 +292,82 @@
 
         .balance-amount {
             font-weight: bold;
+            font-size: 14px;
         }
 
         .positive .balance-amount {
             color: var(--success-color);
+            text-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
         }
 
         .negative .balance-amount {
             color: var(--danger-color);
+            text-shadow: 0 0 6px rgba(255, 0, 102, 0.5);
         }
 
         .tabs {
             display: flex;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
             flex-wrap: wrap;
+            gap: 4px;
+            overflow-x: auto;
+            padding-bottom: 5px;
         }
 
         .tab {
-            padding: 8px 16px;
+            padding: 8px 12px;
             cursor: pointer;
-            background-color: #f1f1f1;
+            background-color: rgba(0, 240, 255, 0.1);
             border: none;
-            border-radius: 5px 5px 0 0;
-            margin-right: 5px;
-            margin-bottom: 5px;
+            border-radius: 6px 6px 0 0;
+            color: var(--text-muted);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        .tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-color);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .tab:hover {
+            color: var(--primary-color);
+            background-color: rgba(0, 240, 255, 0.2);
         }
 
         .tab.active {
-            background-color: var(--primary-color);
-            color: white;
+            background-color: rgba(0, 240, 255, 0.3);
+            color: var(--primary-color);
+            text-shadow: var(--neon-glow);
+        }
+
+        .tab.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
         }
 
         .tab-content {
             display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .tab-content.active {
@@ -202,21 +378,28 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px;
-            margin-bottom: 5px;
-            background-color: #f8f9fa;
-            border-radius: 4px;
+            padding: 10px 12px;
+            margin-bottom: 6px;
+            background-color: rgba(0, 240, 255, 0.05);
+            border-radius: 6px;
+            border-left: 3px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .member-item:hover {
+            background-color: rgba(0, 240, 255, 0.1);
+            transform: translateX(3px) translateZ(3px);
         }
 
         .member-actions {
             display: flex;
-            gap: 5px;
+            gap: 6px;
         }
 
         .edit-member-form {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 8px;
+            margin-top: 8px;
         }
 
         .edit-member-form input {
@@ -226,26 +409,90 @@
         .quick-categories {
             display: flex;
             flex-wrap: wrap;
-            gap: 5px;
-            margin-bottom: 10px;
+            gap: 6px;
+            margin-bottom: 12px;
         }
 
         .category-btn {
-            background-color: #e9ecef;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
+            background-color: rgba(0, 240, 255, 0.1);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 6px 12px;
+            border-radius: 20px;
             cursor: pointer;
+            color: var(--text-color);
+            font-size: 12px;
+            transition: all 0.3s ease;
         }
 
         .category-btn:hover {
-            background-color: #dee2e6;
+            background-color: rgba(0, 240, 255, 0.3);
+            transform: translateY(-2px) translateZ(3px);
+            box-shadow: var(--neon-glow);
         }
 
-        @media (max-width: 768px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
+        .floating-bg {
+            position: fixed;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
+            z-index: -1;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .floating-bg:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-bg:nth-child(2) {
+            top: 60%;
+            left: 70%;
+            animation-delay: 3s;
+            background: radial-gradient(circle, rgba(255, 0, 240, 0.1) 0%, transparent 70%);
+        }
+
+        .floating-bg:nth-child(3) {
+            top: 30%;
+            left: 50%;
+            animation-delay: 6s;
+            background: radial-gradient(circle, rgba(240, 255, 0, 0.1) 0%, transparent 70%);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(15px, 15px) rotate(5deg); }
+            50% { transform: translate(0, 20px) rotate(0deg); }
+            75% { transform: translate(-15px, 15px) rotate(-5deg); }
+        }
+
+        .neon-border {
+            position: relative;
+        }
+
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            border-radius: inherit;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .neon-border:hover::before {
+            opacity: 0.7;
+            animation: neonGlow 1.5s infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            from { filter: blur(3px); opacity: 0.5; }
+            to { filter: blur(5px); opacity: 0.8; }
         }
 
         /* Print-specific styles */
@@ -268,20 +515,116 @@
             table {
                 width: 100%;
                 border-collapse: collapse;
+                font-size: 12px;
             }
             th, td {
                 border: 1px solid #ddd;
-                padding: 8px;
+                padding: 6px;
             }
             th {
                 background-color: #f2f2f2;
+                color: #000;
+            }
+        }
+
+        /* Larger screens */
+        @media (min-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+                padding: 0 20px;
+            }
+            
+            h1::before, h1::after {
+                width: 30px;
+            }
+            
+            h1::before {
+                left: -30px;
+            }
+            
+            h1::after {
+                right: -30px;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                margin: 5px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 10px 15px;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 400px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+                padding: 0 10px;
+            }
+            
+            h1::before, h1::after {
+                width: 15px;
+            }
+            
+            h1::before {
+                left: -15px;
+            }
+            
+            h1::after {
+                right: -15px;
+            }
+            
+            .tab {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+            
+            .member-actions {
+                flex-direction: column;
+                gap: 4px;
+            }
+            
+            .edit-member-form {
+                flex-direction: column;
+                gap: 6px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Floating background elements -->
+    <div class="floating-bg"></div>
+    <div class="floating-bg"></div>
+    <div class="floating-bg"></div>
+    
     <div class="container">
-        <h1>Bachelor Room Expense Tracker</h1>
+        <h1>BACHELOR ROOM EXPENSE TRACKER</h1>
         
         <div class="tabs">
             <button class="tab active" data-tab="transactions">Transactions</button>
@@ -292,29 +635,31 @@
         </div>
 
         <div id="transactions" class="tab-content active">
-            <div class="card">
-                <h2>All Transactions</h2>
-                <table id="transactionsTable">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Type</th>
-                            <th>Person/Category</th>
-                            <th>Amount</th>
-                            <th>Description</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Transactions will be listed here -->
-                    </tbody>
-                </table>
+            <div class="card neon-border">
+                <h2>ALL TRANSACTIONS</h2>
+                <div style="overflow-x: auto;">
+                    <table id="transactionsTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Person/Category</th>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Transactions will be listed here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
         <div id="balances" class="tab-content">
-            <div class="card">
-                <h2>Current Balances</h2>
+            <div class="card neon-border">
+                <h2>CURRENT BALANCES</h2>
                 <div id="balancesList">
                     <!-- Balances will be listed here -->
                 </div>
@@ -322,8 +667,8 @@
         </div>
 
         <div id="add-money" class="tab-content">
-            <div class="card">
-                <h2>Add Money to Pool</h2>
+            <div class="card neon-border">
+                <h2>ADD MONEY TO POOL</h2>
                 <form id="depositForm">
                     <div class="form-group">
                         <label for="depositPerson">Member Name</label>
@@ -348,17 +693,17 @@
         </div>
 
         <div id="spend-money" class="tab-content">
-            <div class="card">
-                <h2>Spend Money from Pool</h2>
+            <div class="card neon-border">
+                <h2>SPEND MONEY FROM POOL</h2>
                 <form id="expenseForm">
                     <div class="form-group">
                         <label for="expenseCategory">Category</label>
                         <div class="quick-categories">
-                            <button type="button" class="category-btn" data-category="Groceries">Groceries</button>
-                            <button type="button" class="category-btn" data-category="Vegetables">Vegetables</button>
-                            <button type="button" class="category-btn" data-category="Water">Water</button>
-                            <button type="button" class="category-btn" data-category="Electricity">Electricity</button>
-                            <button type="button" class="category-btn" data-category="Rent">Rent</button>
+                            <button type="button" class="category-btn neon-border" data-category="Groceries">Groceries</button>
+                            <button type="button" class="category-btn neon-border" data-category="Vegetables">Vegetables</button>
+                            <button type="button" class="category-btn neon-border" data-category="Water">Water</button>
+                            <button type="button" class="category-btn neon-border" data-category="Electricity">Electricity</button>
+                            <button type="button" class="category-btn neon-border" data-category="Rent">Rent</button>
                         </div>
                         <select id="expenseCategory" required>
                             <option value="">Select Category</option>
@@ -393,8 +738,8 @@
 
         <div id="members" class="tab-content">
             <div class="grid">
-                <div class="card">
-                    <h2>Add Member</h2>
+                <div class="card neon-border">
+                    <h2>ADD MEMBER</h2>
                     <form id="memberForm">
                         <div class="form-group">
                             <label for="memberName">Member Name</label>
@@ -404,8 +749,8 @@
                     </form>
                 </div>
 
-                <div class="card">
-                    <h2>Current Members</h2>
+                <div class="card neon-border">
+                    <h2>CURRENT MEMBERS</h2>
                     <div id="membersList">
                         <!-- Members will be listed here -->
                     </div>
@@ -413,8 +758,8 @@
             </div>
         </div>
         
-        <div class="card">
-            <h2>Quick Actions</h2>
+        <div class="card neon-border">
+            <h2>QUICK ACTIONS</h2>
             <div class="grid">
                 <div>
                     <button id="exportBtn" class="btn btn-success">Export Data</button>
@@ -623,26 +968,33 @@
                         <head>
                             <title>Room Expense Report</title>
                             <style>
-                                body { font-family: Arial, sans-serif; margin: 20px; }
-                                h1 { color: #4a6fa5; text-align: center; }
-                                h2 { color: #4a6fa5; margin-top: 20px; }
-                                table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+                                body { font-family: Arial, sans-serif; margin: 15px; }
+                                h1 { color: #4a6fa5; text-align: center; margin-bottom: 20px; }
+                                h2 { color: #4a6fa5; margin-top: 20px; font-size: 18px; }
+                                table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 14px; }
                                 th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
                                 th { background-color: #f2f2f2; }
-                                .balance-item { margin-bottom: 10px; }
-                                .positive { color: #28a745; }
-                                .negative { color: #dc3545; }
-                                .summary { margin-top: 30px; font-weight: bold; }
+                                .balance-item { margin-bottom: 10px; padding: 8px; border-left: 4px solid #ddd; }
+                                .positive { color: #28a745; border-left-color: #28a745; }
+                                .negative { color: #dc3545; border-left-color: #dc3545; }
+                                .summary { margin-top: 20px; font-weight: bold; padding: 10px; background-color: #f8f9fa; border-radius: 5px; }
+                                @page { size: auto; margin: 10mm; }
+                                @media print {
+                                    body { margin: 0; padding: 0; }
+                                    .no-print { display: none !important; }
+                                }
                             </style>
                         </head>
                         <body>
                             ${document.getElementById('printContent').innerHTML}
                             <script>
                                 window.onload = function() {
-                                    window.print();
                                     setTimeout(function() {
-                                        window.close();
-                                    }, 1000);
+                                        window.print();
+                                        setTimeout(function() {
+                                            window.close();
+                                        }, 500);
+                                    }, 200);
                                 };
                             <\/script>
                         </body>
@@ -785,7 +1137,7 @@
                 transactionsTable.innerHTML = '';
                 
                 if (transactions.length === 0) {
-                    transactionsTable.innerHTML = '<tr><td colspan="6">No transactions yet.</td></tr>';
+                    transactionsTable.innerHTML = '<tr><td colspan="6" style="text-align: center;">No transactions yet.</td></tr>';
                     return;
                 }
                 
@@ -833,70 +1185,54 @@
             function renderBalances() {
                 balancesList.innerHTML = '';
                 
-                if (transactions.length === 0) {
-                    balancesList.innerHTML = '<p>No transactions to calculate balances.</p>';
+                if (members.length === 0) {
+                    balancesList.innerHTML = '<p>No members added yet.</p>';
                     return;
                 }
                 
-                // Calculate balances for each person
-                const balances = {};
-                members.forEach(person => {
-                    balances[person] = 0;
+                // Calculate total deposits and expenses
+                const totalDeposits = transactions
+                    .filter(t => t.type === 'deposit')
+                    .reduce((sum, t) => sum + t.amount, 0);
+                
+                const totalExpenses = transactions
+                    .filter(t => t.type === 'expense')
+                    .reduce((sum, t) => sum + t.amount, 0);
+                
+                // Calculate each member's deposits
+                const memberDeposits = {};
+                members.forEach(member => {
+                    memberDeposits[member] = transactions
+                        .filter(t => t.type === 'deposit' && t.personOrCategory === member)
+                        .reduce((sum, t) => sum + t.amount, 0);
                 });
                 
-                // Calculate total deposited and total expenses
-                let totalDeposited = 0;
-                let totalExpenses = 0;
+                // Calculate each member's share of expenses
+                const memberCount = members.length;
+                const expensePerMember = totalExpenses / memberCount;
                 
-                transactions.forEach(trans => {
-                    if (trans.type === 'deposit') {
-                        balances[trans.personOrCategory] += trans.amount;
-                        totalDeposited += trans.amount;
-                    } else {
-                        totalExpenses += trans.amount;
-                    }
-                });
-                
-                // Calculate remaining pool
-                const remainingPool = totalDeposited - totalExpenses;
-                
-                // Display balances
-                members.forEach(person => {
-                    const balance = balances[person];
-                    const div = document.createElement('div');
-                    div.className = `balance-card ${balance >= 0 ? 'positive' : 'negative'}`;
-                    div.innerHTML = `
-                        <span>${person}</span>
-                        <span class="balance-amount">₹${balance.toFixed(2)} contributed</span>
+                // Calculate each member's balance
+                members.forEach(member => {
+                    const balance = memberDeposits[member] - expensePerMember;
+                    const balanceCard = document.createElement('div');
+                    balanceCard.className = `balance-card ${balance >= 0 ? 'positive' : 'negative'}`;
+                    
+                    balanceCard.innerHTML = `
+                        <span>${member}</span>
+                        <span class="balance-amount">₹${Math.abs(balance).toFixed(2)} ${balance >= 0 ? 'owed' : 'owes'}</span>
                     `;
-                    balancesList.appendChild(div);
+                    
+                    balancesList.appendChild(balanceCard);
                 });
                 
-                // Display totals
-                const totalsDiv = document.createElement('div');
-                totalsDiv.className = 'balance-card';
-                totalsDiv.innerHTML = `
-                    <span><strong>Total Deposited</strong></span>
-                    <span class="balance-amount"><strong>₹${totalDeposited.toFixed(2)}</strong></span>
+                // Add summary card
+                const summaryCard = document.createElement('div');
+                summaryCard.className = 'balance-card';
+                summaryCard.innerHTML = `
+                    <span>Total Pool Money</span>
+                    <span class="balance-amount">₹${(totalDeposits - totalExpenses).toFixed(2)}</span>
                 `;
-                balancesList.appendChild(totalsDiv);
-                
-                const expensesDiv = document.createElement('div');
-                expensesDiv.className = 'balance-card negative';
-                expensesDiv.innerHTML = `
-                    <span><strong>Total Expenses</strong></span>
-                    <span class="balance-amount"><strong>₹${totalExpenses.toFixed(2)}</strong></span>
-                `;
-                balancesList.appendChild(expensesDiv);
-                
-                const remainingDiv = document.createElement('div');
-                remainingDiv.className = 'balance-card';
-                remainingDiv.style.borderLeftColor = remainingPool >= 0 ? 'var(--success-color)' : 'var(--danger-color)';
-                remainingDiv.innerHTML = `
-                    <span><strong>Remaining Pool</strong></span>
-                    <span class="balance-amount"><strong>₹${remainingPool.toFixed(2)}</strong></span>
-                `;
-                balancesList.appendChild(remainingDiv);
+                balancesList.appendChild(summaryCard);
             }
 
             // Prepare print content
@@ -904,90 +1240,45 @@
                 const printContent = document.getElementById('printContent');
                 printContent.innerHTML = '';
                 
-                // Title
+                // Add title
                 const title = document.createElement('h1');
-                title.textContent = 'Bachelor Room Expense Report';
+                title.textContent = 'Room Expense Report';
                 printContent.appendChild(title);
                 
+                // Add date
                 const date = document.createElement('p');
-                date.textContent = `Generated on ${new Date().toLocaleDateString()}`;
+                date.textContent = `Generated on: ${new Date().toLocaleDateString()}`;
                 date.style.textAlign = 'center';
+                date.style.marginBottom = '20px';
                 printContent.appendChild(date);
                 
-                // Members section
+                // Add members section
                 const membersTitle = document.createElement('h2');
-                membersTitle.textContent = 'Room Members';
+                membersTitle.textContent = 'Current Members';
                 printContent.appendChild(membersTitle);
                 
                 const membersList = document.createElement('ul');
                 members.forEach(member => {
-                    const item = document.createElement('li');
-                    item.textContent = member;
-                    membersList.appendChild(item);
+                    const li = document.createElement('li');
+                    li.textContent = member;
+                    li.style.marginBottom = '5px';
+                    membersList.appendChild(li);
                 });
                 printContent.appendChild(membersList);
                 
-                // Balances section
-                const balances = {};
-                members.forEach(person => {
-                    balances[person] = 0;
-                });
+                // Add transactions section
+                const transTitle = document.createElement('h2');
+                transTitle.textContent = 'Recent Transactions';
+                printContent.appendChild(transTitle);
                 
-                let totalDeposited = 0;
-                let totalExpenses = 0;
-                
-                transactions.forEach(trans => {
-                    if (trans.type === 'deposit') {
-                        balances[trans.personOrCategory] += trans.amount;
-                        totalDeposited += trans.amount;
-                    } else {
-                        totalExpenses += trans.amount;
-                    }
-                });
-                
-                const remainingPool = totalDeposited - totalExpenses;
-                
-                const balancesTitle = document.createElement('h2');
-                balancesTitle.textContent = 'Financial Summary';
-                printContent.appendChild(balancesTitle);
-                
-                const balancesList = document.createElement('div');
-                members.forEach(person => {
-                    const balance = balances[person];
-                    const balanceDiv = document.createElement('div');
-                    balanceDiv.className = 'balance-item';
-                    balanceDiv.innerHTML = `<strong>${person}:</strong> ₹${balance.toFixed(2)} contributed`;
-                    balancesList.appendChild(balanceDiv);
-                });
-                printContent.appendChild(balancesList);
-                
-                // Summary
-                const summaryDiv = document.createElement('div');
-                summaryDiv.className = 'summary';
-                summaryDiv.innerHTML = `
-                    <p>Total Deposited: ₹${totalDeposited.toFixed(2)}</p>
-                    <p>Total Expenses: ₹${totalExpenses.toFixed(2)}</p>
-                    <p>Remaining Pool: ₹${remainingPool.toFixed(2)}</p>
-                `;
-                printContent.appendChild(summaryDiv);
-                
-                // Recent transactions
-                const transactionsTitle = document.createElement('h2');
-                transactionsTitle.textContent = 'Recent Transactions';
-                printContent.appendChild(transactionsTitle);
-                
-                if (transactions.length === 0) {
-                    const noTrans = document.createElement('p');
-                    noTrans.textContent = 'No transactions yet.';
-                    printContent.appendChild(noTrans);
-                } else {
+                if (transactions.length > 0) {
                     const transTable = document.createElement('table');
                     transTable.innerHTML = `
                         <thead>
                             <tr>
                                 <th>Date</th>
                                 <th>Type</th>
-                                <th>Category/Member</th>
+                                <th>Person/Category</th>
                                 <th>Amount</th>
                                 <th>Description</th>
                             </tr>
@@ -1005,6 +1296,59 @@
                         </tbody>
                     `;
                     printContent.appendChild(transTable);
+                } else {
+                    const noTrans = document.createElement('p');
+                    noTrans.textContent = 'No transactions recorded yet.';
+                    printContent.appendChild(noTrans);
+                }
+                
+                // Add balances section
+                const balancesTitle = document.createElement('h2');
+                balancesTitle.textContent = 'Current Balances';
+                printContent.appendChild(balancesTitle);
+                
+                if (members.length > 0) {
+                    // Calculate balances (same logic as renderBalances)
+                    const totalExpenses = transactions
+                        .filter(t => t.type === 'expense')
+                        .reduce((sum, t) => sum + t.amount, 0);
+                    
+                    const memberDeposits = {};
+                    members.forEach(member => {
+                        memberDeposits[member] = transactions
+                            .filter(t => t.type === 'deposit' && t.personOrCategory === member)
+                            .reduce((sum, t) => sum + t.amount, 0);
+                    });
+                    
+                    const expensePerMember = totalExpenses / members.length;
+                    
+                    members.forEach(member => {
+                        const balance = memberDeposits[member] - expensePerMember;
+                        const balanceDiv = document.createElement('div');
+                        balanceDiv.className = `balance-item ${balance >= 0 ? 'positive' : 'negative'}`;
+                        balanceDiv.innerHTML = `
+                            <strong>${member}</strong>: ₹${Math.abs(balance).toFixed(2)} ${balance >= 0 ? 'should receive' : 'should pay'}
+                        `;
+                        printContent.appendChild(balanceDiv);
+                    });
+                    
+                    // Add summary
+                    const totalDeposits = transactions
+                        .filter(t => t.type === 'deposit')
+                        .reduce((sum, t) => sum + t.amount, 0);
+                    
+                    const summaryDiv = document.createElement('div');
+                    summaryDiv.className = 'summary';
+                    summaryDiv.innerHTML = `
+                        <p>Total Deposits: ₹${totalDeposits.toFixed(2)}</p>
+                        <p>Total Expenses: ₹${totalExpenses.toFixed(2)}</p>
+                        <p>Remaining Pool Money: ₹${(totalDeposits - totalExpenses).toFixed(2)}</p>
+                    `;
+                    printContent.appendChild(summaryDiv);
+                } else {
+                    const noMembers = document.createElement('p');
+                    noMembers.textContent = 'No members added yet.';
+                    printContent.appendChild(noMembers);
                 }
             }
 
